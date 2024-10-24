@@ -1,27 +1,33 @@
 *** Settings ***
 Library    SeleniumLibrary
+Documentation    Teste Forms
 
 *** Variables ***
-${BROWSER}            chrome
-${URL}                https://docs.google.com/forms/d/e/1FAIpQLSf_0J1wuCoWHZKz9O6pzkSk89KCrq6Ydy37rkJUJ_LR_I-rqA/viewform
-# ${URL}                https://forms.gle/4uXqWTQv9cMQHMN27
-${Input_name}         aria-labelledby:i5
-${Input_idade}        aria-labelledby:i1
-${Input_cidade}       aria-labelledby:i9
-${Button}             aria-label:Submit
+${BROWSER}                Chrome
+${URL}                    http://127.0.0.1:5500/index.html
+${Input_name}             id:username
+${Input_senha}            id:password
+${Input_confirm_senha}    id:password-confirmation
+${Button}                 id:alerta
 
 *** Keywords ***
-abrir forms;
+abrir navegador
     Open Browser    url=${URL}    browser=${BROWSER}
-    Close Browser
 
-preencher campos;
-    Input Text    ${Input_name}        João
-    Input Text    ${Input_idade}       20
-    Input Text    ${Input_cidade}      Belo Horizonte
+preencher campos
+    Input Text    ${Input_name}             Gabi
+    Input Text    ${Input_senha}            gabi123
+    Input Text    ${Input_confirm_senha}    gabi123
 
-clicar em enviar;
+clicar em enviar
     Click Element    ${Button}
 
-fechar forms;
-    Close Browser
+# fechar forms;
+#     Close Browser
+
+*** Test Cases ***
+Caso de Exemplo
+    abrir navegador
+    preencher campos
+    clicar em enviar
+    #fechar forms
