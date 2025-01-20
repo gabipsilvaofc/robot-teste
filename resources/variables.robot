@@ -76,5 +76,6 @@ ${erro-criar-template}                   xpath=//*[@id="0"]/div[1]
 ${checkbox-template}                     id:checkbox-root-item
 ${button-excluir-template}               xpath=/html/body/main/div[2]/div[2]/div[2]/div[2]
 ${button-confirmar-excluir-template}     id:button-confirm-modal
-${text-template} =                       "Disparo silencioso"
+${text-template} =                       "Disparo 24h"
+${id_checkbox} =                         
 # ${text-template}                         xpath=//*[@id="-name-index-0"]

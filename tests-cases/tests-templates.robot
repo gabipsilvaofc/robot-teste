@@ -25,35 +25,30 @@ Selecionar Itens e Zonas
     # abre
     Click Element                    ${button-abrir-zonas}
     ${elementos} =    Get WebElements    xpath=//*[contains(@id, '-name-index-')]
-    ${id_checkbox} =    Set Variable    ${EMPTY}
     FOR    ${elemento}    IN    @{elementos}
         ${id_elemento} =    Get Element Attribute    ${elemento}    id
         ${numero} =    Extract Numero Do Id    ${id_elemento}
         ${texto_elemento} =    Get Text    ${elemento}
-        Run Keyword If    '${texto_elemento}' == '${text-template}'    Substituir Id Do Checkbox    ${numero}
+        Run Keyword If    '${texto_elemento}' == '${text-template}'    Set Variable    ${id_checkbox}    -checkbox-index-${numero}
+        Run Keyword If    '${texto_elemento}' == '${text-template}'    Click Element    id=${id_checkbox}
     END
-    ${id_checkbox} =    Create Checkbox Id    ${numero}
-    Set Checkbox    ${id_checkbox}
     Sleep    5s
     # fecha
     # Click Element                    ${button-abrir-zonas}
 
 Extract Numero Do Id
     [Arguments]    ${id_elemento}
-    ${partes} =    Split String    ${id_elemento}    '-'
-    ${index} =    Get Index From List    ${partes}    ${text-template}
-    ${numero} =    Get From List    ${partes}    ${index}
+    ${numero} =    Remove String    ${id_elemento}    -name-index-
     [Return]    ${numero}
-# Extract Numero Do Id
-#     [Arguments]    ${id_elemento}
-#     ${partes} =    Split String    ${id_elemento}    '-'
-#     ${numero} =    Run Keyword If    len(${partes}) > 3    Get From List    ${partes}    3    ELSE    Set Variable    0
-#     [Return]    ${numero}
 
 Substituir Id Do Checkbox
-    [Arguments]    ${numero}
-    ${id_checkbox} =    Create Checkbox Id    ${numero}
-    Set Checkbox    ${id_checkbox}
+    [Arguments]    ${texto_elemento}
+    Should Be Equal    ${texto_elemento}    ${text-template}
+    ${elementos} =    Get WebElements    xpath=//*[contains(@id, '-name-index-')]
+    FOR    ${elemento}    IN    @{elementos}
+        ${texto_elemento} =    Get Text    ${elemento}
+        Run Keyword If    '${texto_elemento}' == '${text-template}'    Set Checkbox    ${elemento}
+    END
 
 Create Checkbox Id
     [Arguments]    ${numero}
